@@ -18,6 +18,39 @@ jobs:
       with:
         go-version: '1.24.7'
 
+    - name: Format check (gofmt)
+      run: |
+        if [ "$(gofmt -s -l . | wc -l)" -gt 0 ]; then
+          echo "The following files are not formatted:"
+          gofmt -s -l .
+          exit 1
+        fi
+
+    - name: Vet
+      run: go vet ./...
+
+    - name: Install staticcheck
+      run: go install honnef.co/go/tools/cmd/staticcheck@latest
+
+    - name: Run staticcheck
+      run: staticcheck ./...
+
+    - name: Install golangci-lint
+      uses: golangci/golangci-lint-action@v6
+      with:
+        version: latest
+
+    - name: Install golines
+      run: go install github.com/segmentio/golines@latest
+
+    - name: Check golines formatting
+      run: |
+        if [ "$(golines -l . | wc -l)" -gt 0 ]; then
+          echo "The following files need golines formatting:"
+          golines -l .
+          exit 1
+        fi
+
     - name: Build
       run: go build -v ./...
 
