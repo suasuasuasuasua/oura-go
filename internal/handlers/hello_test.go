@@ -1,4 +1,4 @@
-package main
+package handlers
 
 import (
 	"net/http"
@@ -13,7 +13,7 @@ func TestHelloHandler(t *testing.T) {
 	}
 
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(helloHandler)
+	handler := http.HandlerFunc(HelloHandler)
 
 	handler.ServeHTTP(rr, req)
 

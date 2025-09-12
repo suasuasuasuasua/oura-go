@@ -31,5 +31,9 @@ go.work.sum
 # .idea/
 # .vscode/
 
-# Project specific binary
+# Build output directory
+bin/
+
+# Project specific binaries
 oura-go
+server
