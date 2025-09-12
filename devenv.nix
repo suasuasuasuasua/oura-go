@@ -16,6 +16,7 @@
     staticcheck.enable = true;
     # https://github.com/cachix/git-hooks.nix?tab=readme-ov-file#nix-1
     nixfmt-rfc-style.enable = true;
+    prettier.enable = true;
   };
 
   # See full reference at https://devenv.sh/reference/options/
