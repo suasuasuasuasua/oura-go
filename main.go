@@ -51,6 +51,9 @@ func main() {
 
 	http.HandleFunc("/", httpserver)
 	var err = http.ListenAndServe(addrPort.String(), nil)
+	// NOTE: even though http.ListenAndServe returns an error, the docs
+	// says that it will _always_ return a non-nill error
+	// this is for completeness so my linter is happy
 	if err != nil {
 		log.Fatalln("Something horrible has gone wrong!")
 	}
