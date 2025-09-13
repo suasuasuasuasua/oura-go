@@ -46,7 +46,7 @@ func main() {
 
 	if verbose {
 		fmt.Printf("Starting server on port %d\n", addrPort.Port())
-		fmt.Printf("Visit on http://%s:%d\n", addrPort.Addr(), addrPort.Port())
+		fmt.Printf("Visit on http://%s\n", addrPort.String())
 	}
 
 	http.HandleFunc("/", httpserver)
