@@ -8,13 +8,6 @@ import (
 	"net/netip"
 )
 
-func httpserver(w http.ResponseWriter, _ *http.Request) {
-	var _, err = fmt.Fprintf(w, "Hello")
-	if err != nil {
-		log.Fatalln("Could not write to http.ResponseWriter")
-	}
-}
-
 var verbose bool
 var addrPort netip.AddrPort
 
@@ -45,11 +38,23 @@ func main() {
 	flag.Parse()
 
 	if verbose {
-		fmt.Printf("Starting server on port %d\n", addrPort.Port())
-		fmt.Printf("Visit on http://%s\n", addrPort.String())
+		fmt.Printf("Starting Oura data visualization server on port %d\n", addrPort.Port())
+		fmt.Printf("Visit http://%s to upload CSV files and create charts\n", addrPort.String())
 	}
 
-	http.HandleFunc("/", httpserver)
+	// Initialize web handler for data visualization
+	webHandler := NewWebHandler()
+	webHandler.RegisterRoutes()
+
+	fmt.Println("Oura Go Data Visualization Server")
+	fmt.Println("==================================")
+	fmt.Printf("Server running on: http://%s\n", addrPort.String())
+	fmt.Println("Features:")
+	fmt.Println("  - CSV file upload")
+	fmt.Println("  - Interactive charts (line/bar)")
+	fmt.Println("  - Oura health data visualization")
+	fmt.Println()
+
 	var err = http.ListenAndServe(addrPort.String(), nil)
 	// NOTE: even though http.ListenAndServe returns an error, the docs
 	// says that it will _always_ return a non-nill error
